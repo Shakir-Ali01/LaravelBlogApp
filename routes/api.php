@@ -7,10 +7,9 @@ use App\Http\Controllers\TempImageController;
 
 
 Route::post('blogs', [BlogController::class,'store']);
-Route::get('showBlog', [BlogController::class,'show']);
+Route::get('blogs', [BlogController::class,'index']);
+Route::get('blogs/{id}', [BlogController::class,'show']);
 Route::post('save-temp-image', [TempImageController::class,'store']);
-
-
 Route::get('/user', function (Request $request) {
     return $request->user();
 })->middleware('auth:sanctum');

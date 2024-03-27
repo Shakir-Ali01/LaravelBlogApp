@@ -8,11 +8,28 @@ use App\Models\TempImage;
 class BlogController extends Controller
 {
     // This method will return all blog
-    public function index(){     
+    public function index(){   
+      $blogs=Blog::orderby('created_at','DESC')->get();  
+      return response()->json([
+        'status'=>true,
+         'data'=>$blogs
+      ]);
     }
     // This method will return a single blog
-    public function show(){
-         return "hello";
+    public function show($id){
+      $blog=blog::find($id);
+      if($blog==null){
+        return response()->json([
+          'status'=>false,
+           'message'=>'Blog Not Found'
+        ]);
+      }
+
+      $blog['date']=\Carbon\Carbon::parse($blog->created_at)->format('d M, Y');
+      return response()->json([
+        'status'=>true,
+         'data'=>$blog
+      ]);
     }
     // this method is will store a blog
     public function store(Request $request)
